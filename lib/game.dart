@@ -12,8 +12,6 @@ class MyGame extends FlameGame
     with SingleGameInstance, HasCollisionDetection, TapCallbacks {
   int textureIndex = 0;
   final List<String> textureKeys = [
-    'concave1',
-    'concave2',
     'convex_double',
     'convex1',
     'convex2',
@@ -22,6 +20,8 @@ class MyGame extends FlameGame
     'mirror_start_end',
     'ramp_double',
     'ramp_triple',
+    'concave1',
+    'concave2',
   ];
 
   @override
@@ -43,9 +43,9 @@ class MyGame extends FlameGame
     world.add(
       CaveWallComponent(
         textureKeys.elementAt(textureIndex),
-        anchor: Anchor.topLeft,
+        anchor: Anchor.bottomCenter,
         size: sprite.srcSize,
-        position: Vector2(size.x / 4, 0),
+        position: Vector2(size.x / 2, size.y / 2),
       )
         // ..flipHorizontallyAroundCenter()
         ..flipVerticallyAroundCenter()
@@ -54,9 +54,9 @@ class MyGame extends FlameGame
     world.add(
       CaveWallComponent(
         textureKeys.elementAt(textureIndex),
-        anchor: Anchor.bottomLeft,
+        anchor: Anchor.topCenter,
         size: sprite.srcSize,
-        position: Vector2(size.x / 4, size.y),
+        position: Vector2(size.x / 2, size.y / 2),
       )..debugMode = true,
     );
   }
@@ -78,27 +78,50 @@ class MyGame extends FlameGame
     addWall();
 
     world.addAll([
+      // RectangleComponent.square(
+      //   size: 16,
+      //   paint: Paint()..color = Colors.white,
+      //   priority: 10,
+      //   position: Vector2(0, 0),
+      //   children: [
+      //     RectangleHitbox.relative(Vector2(1, 1), parentSize: Vector2.all(16)),
+      //     MoveEffect.by(Vector2(size.x, 0),
+      //         EffectController(duration: 2, infinite: true)),
+      //   ],
+      // ),
+      // RectangleComponent.square(
+      //   size: 16,
+      //   paint: Paint()..color = Colors.white,
+      //   priority: 10,
+      //   anchor: Anchor.bottomLeft,
+      //   position: Vector2(0, size.y - 16),
+      //   children: [
+      //     RectangleHitbox.relative(Vector2(1, 1), parentSize: Vector2.all(16)),
+      //     MoveEffect.by(Vector2(size.x, 0),
+      //         EffectController(duration: 2, infinite: true)),
+      //   ],
+      // ),
+      // RectangleComponent.square(
+      //   size: 16,
+      //   paint: Paint()..color = Colors.white,
+      //   anchor: Anchor.center,
+      //   priority: 10,
+      //   position: Vector2(size.x / 2, 0),
+      //   children: [
+      //     RectangleHitbox.relative(Vector2(1, 1), parentSize: Vector2.all(16)),
+      //     MoveEffect.by(Vector2(0, size.y),
+      //         EffectController(duration: 2, infinite: true)),
+      //   ],
+      // ),
       RectangleComponent.square(
         size: 16,
         paint: Paint()..color = Colors.white,
         anchor: Anchor.center,
         priority: 10,
-        position: Vector2(0, 0),
+        position: Vector2(size.x / 2, size.y - 8),
         children: [
           RectangleHitbox.relative(Vector2(1, 1), parentSize: Vector2.all(16)),
-          MoveEffect.by(Vector2(size.x, 0),
-              EffectController(duration: 2, infinite: true)),
-        ],
-      ),
-      RectangleComponent.square(
-        size: 16,
-        paint: Paint()..color = Colors.white,
-        anchor: Anchor.center,
-        priority: 10,
-        position: Vector2(0, size.y - 16),
-        children: [
-          RectangleHitbox.relative(Vector2(1, 1), parentSize: Vector2.all(16)),
-          MoveEffect.by(Vector2(size.x, 0),
+          MoveEffect.by(Vector2(0, -size.y),
               EffectController(duration: 2, infinite: true)),
         ],
       ),
